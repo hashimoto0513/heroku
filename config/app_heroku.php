@@ -7,7 +7,7 @@ use Cake\Error\ExceptionRenderer;
 use Cake\Log\Engine\FileLog;
 use Cake\Mailer\Transport\MailTransport;
 
-$db = parse_url($_SERVER['CLEARDB_DATABASE_URL']);
+$db = parse_url(env('CLEARDB_DATABASE_URL'));
 
 return [
     /*
@@ -269,8 +269,8 @@ return [
      */
     'Datasources' => [
         'default' => [
-            'className' => Connection::class,
-            'driver' => Mysql::class,
+            'className' => 'Cake\Database\Connection',
+            'driver' => 'Cake\Database\Driver\Mysql',
             'persistent' => false,
             'url' => env('CLEARDB_DATABASE_URL'),
             'host' => $db['host'],
@@ -289,11 +289,10 @@ return [
             /*
              * You do not need to set this flag to use full utf-8 encoding (internal default since CakePHP 3.6).
              */
-            'encoding' => 'utf8mb4',
-            'timezone' => '+09:00',
-            'flags' => [],
+            'encoding' => 'utf8',
+            'timezone' => 'UTC',
+            //'flags' => [],
             'cacheMetadata' => true,
-            'log' => false,
 
             /*
              * Set identifier quoting to true if you are using reserved words or
@@ -314,7 +313,7 @@ return [
              */
             //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
 
-            'url' => env('DATABASE_URL', null),
+            //'url' => env('DATABASE_URL', null),
             // 'unix_socket' => '/Applications/MAMP/tmp/mysql/mysql.sock'
         ],
     ],
